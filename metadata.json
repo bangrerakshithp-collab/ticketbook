@@ -1,0 +1,6 @@
+{
+  "name": "Bus Ticket Booking",
+  "description": "A comprehensive web application for searching bus routes, selecting seats, booking tickets, and managing reservations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
