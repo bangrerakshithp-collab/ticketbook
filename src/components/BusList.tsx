@@ -132,7 +132,7 @@ export const BusList: React.FC<BusListProps> = ({ buses, filters, setFilters, on
               <BusIcon className="w-12 h-12 text-slate-300 mx-auto" />
               <h3 className="text-base font-bold text-slate-800">No buses found for this route</h3>
               <p className="text-xs text-slate-500 max-w-md mx-auto">
-                Try searching for another route like New York to Boston or New York to Washington DC.
+                Try searching for another route like Bengaluru to Mumbai or Bengaluru to Goa.
               </p>
             </div>
           ) : (
@@ -158,8 +158,8 @@ export const BusList: React.FC<BusListProps> = ({ buses, filters, setFilters, on
                   {/* Price & Select Button */}
                   <div className="flex items-center justify-between sm:justify-end gap-6">
                     <div className="text-right">
-                      <span className="text-xs text-slate-400 line-through block">${bus.originalPrice}</span>
-                      <span className="text-2xl font-extrabold text-blue-600">${bus.price}</span>
+                      <span className="text-xs text-slate-400 line-through block">₹{bus.originalPrice}</span>
+                      <span className="text-2xl font-extrabold text-blue-600">₹{bus.price}</span>
                       <span className="text-[10px] text-slate-500 block">per seat</span>
                     </div>
                     <button

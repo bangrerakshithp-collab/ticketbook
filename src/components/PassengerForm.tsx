@@ -200,7 +200,7 @@ export const PassengerForm: React.FC<PassengerFormProps> = ({
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 rounded-xl shadow-lg shadow-blue-600/30 transition-all text-base flex items-center justify-center gap-2"
           >
             <CreditCard className="w-5 h-5" />
-            Proceed to Payment (${finalTotal})
+            Proceed to Payment (₹{finalTotal})
           </button>
         </form>
 
@@ -238,7 +238,7 @@ export const PassengerForm: React.FC<PassengerFormProps> = ({
               <div className="flex flex-wrap gap-1.5">
                 {selectedSeats.map(s => (
                   <span key={s.id} className="px-2.5 py-1 bg-blue-50 text-blue-700 rounded-lg text-xs font-bold border border-blue-200">
-                    Seat {s.number} (${s.price})
+                    Seat {s.number} (₹{s.price})
                   </span>
                 ))}
               </div>
@@ -268,7 +268,7 @@ export const PassengerForm: React.FC<PassengerFormProps> = ({
               </div>
               {promoApplied && (
                 <p className="text-xs text-emerald-600 font-semibold mt-1.5 flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5" /> Promo applied successfully (-${discount})
+                  <CheckCircle2 className="w-3.5 h-3.5" /> Promo applied successfully (-₹{discount})
                 </p>
               )}
               {promoError && (
@@ -280,21 +280,21 @@ export const PassengerForm: React.FC<PassengerFormProps> = ({
             <div className="pt-4 border-t border-slate-100 space-y-2 text-xs text-slate-600">
               <div className="flex justify-between">
                 <span>Base Fare ({selectedSeats.length} seats)</span>
-                <span className="font-medium text-slate-800">${rawTotal}</span>
+                <span className="font-medium text-slate-800">₹{rawTotal}</span>
               </div>
               <div className="flex justify-between">
                 <span>Taxes & Service Fee</span>
-                <span className="font-medium text-slate-800">${taxes}</span>
+                <span className="font-medium text-slate-800">₹{taxes}</span>
               </div>
               {discount > 0 && (
                 <div className="flex justify-between text-emerald-600 font-semibold">
                   <span>Discount</span>
-                  <span>-${discount}</span>
+                  <span>-₹{discount}</span>
                 </div>
               )}
               <div className="flex justify-between text-base font-bold text-slate-900 pt-3 border-t border-slate-200">
                 <span>Total Amount</span>
-                <span className="text-blue-600">${finalTotal}</span>
+                <span className="text-blue-600">₹{finalTotal}</span>
               </div>
             </div>
 

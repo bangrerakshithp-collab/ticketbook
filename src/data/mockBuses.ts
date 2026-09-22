@@ -1,51 +1,34 @@
 import { Bus, SeatConfig } from '../types';
 
 export const CITIES = [
-  'New York',
-  'Boston',
-  'Washington DC',
-  'Philadelphia',
-  'Chicago',
-  'Detroit',
-  'Toronto',
-  'Montreal',
-  'Los Angeles',
-  'San Francisco',
-  'Las Vegas',
-  'San Diego',
-  'Seattle',
-  'Portland',
-  'Miami',
-  'Orlando',
-  'Atlanta'
+  'Bengaluru',
+  'Mumbai',
+  'Pune',
+  'Hyderabad',
+  'Goa',
+  'Chennai',
+  'Delhi',
+  'Jaipur',
+  'Ahmedabad',
+  'Coimbatore',
+  'Kochi',
+  'Madurai',
+  'Mysuru',
+  'Mangaluru'
 ];
 
-// Helper to generate a realistic seat layout
+// Helper to generate a realistic seat layout with INR pricing
 function generateLayout(deckType: 'single' | 'double', basePrice: number): SeatConfig[][] {
-  const rows = deckType === 'double' ? 8 : 10;
-  const layout: SeatConfig[][] = [];
-
-  for (let r = 1; r <= rows; r++) {
-    const rowSeats: SeatConfig[] = [];
-    if (deckType === 'double') {
-      // Sleeper bus: Lower deck (L1-L3 per row), Upper deck (U1-U3 per row)
-      // For simplicity in 2D array, let's create lower deck rows and upper deck rows
-      // Let's make 5 rows lower deck, 5 rows upper deck
-    }
-  }
-
-  // Let's create a structured layout: Lower deck (rows 1-5), Upper deck (rows 6-10) for sleepers, or 10 rows for single deck
   const totalRows = 8;
+  const layout: SeatConfig[][] = [];
   for (let r = 1; r <= totalRows; r++) {
     const rowSeats: SeatConfig[] = [];
     const deck = r <= 4 ? 'lower' : 'upper';
     const rowPrefix = deck === 'lower' ? 'L' : 'U';
     
-    // 3 columns in sleeper: Left single berth (S), Aisle, Right double berth (B1, B2)
     const seatsInRow = ['1', '2', '3', '4'];
     seatsInRow.forEach((colNum, idx) => {
       const seatNum = `${rowPrefix}${r}${String.fromCharCode(65 + idx)}`;
-      // random booked status
       const isBooked = Math.random() < 0.25;
       const isLadies = !isBooked && Math.random() < 0.15;
       rowSeats.push({
@@ -53,7 +36,7 @@ function generateLayout(deckType: 'single' | 'double', basePrice: number): SeatC
         number: seatNum,
         type: deckType === 'double' ? 'sleeper' : 'seater',
         deck: deckType === 'double' ? deck : 'lower',
-        price: deck === 'upper' ? basePrice + 5 : basePrice,
+        price: deck === 'upper' ? basePrice + 100 : basePrice,
         isBooked,
         isLadies
       });
@@ -67,184 +50,184 @@ function generateLayout(deckType: 'single' | 'double', basePrice: number): SeatC
 export const MOCK_BUSES: Bus[] = [
   {
     id: 'bus-1',
-    operator: 'Greyhound Express',
+    operator: 'VRL Travels',
     busType: 'AC Sleeper (2+1)',
-    from: 'New York',
-    to: 'Boston',
-    departureTime: '06:00 AM',
-    arrivalTime: '10:30 AM',
-    duration: '4h 30m',
-    price: 45,
-    originalPrice: 55,
-    rating: 4.6,
-    totalReviews: 328,
-    availableSeats: 14,
+    from: 'Bengaluru',
+    to: 'Mumbai',
+    departureTime: '07:00 PM',
+    arrivalTime: '08:30 AM',
+    duration: '13h 30m',
+    price: 1450,
+    originalPrice: 1750,
+    rating: 4.7,
+    totalReviews: 428,
+    availableSeats: 12,
     totalSeats: 32,
     amenities: ['WiFi', 'Charging Port', 'Blanket', 'Water Bottle', 'Live Tracking'],
     boardingPoints: [
-      { id: 'bp-1', time: '05:45 AM', location: 'Port Authority Bus Terminal, Gate 42' },
-      { id: 'bp-2', time: '06:00 AM', location: 'George Washington Bridge Station' }
+      { id: 'bp-1', time: '06:45 PM', location: 'Majestic Bus Stand, Platform 4' },
+      { id: 'bp-2', time: '07:15 PM', location: 'Electronic City Toll Plaza' }
     ],
     droppingPoints: [
-      { id: 'dp-1', time: '10:15 AM', location: 'South Station Bus Terminal, Bay 7' },
-      { id: 'dp-2', time: '10:30 AM', location: 'Logan Airport Terminal B' }
+      { id: 'dp-1', time: '08:00 AM', location: 'Dadar East, Near Bus Depot' },
+      { id: 'dp-2', time: '08:30 AM', location: 'Borivali West, National Park' }
     ],
     deckType: 'double',
-    layout: generateLayout('double', 45)
+    layout: generateLayout('double', 1450)
   },
   {
     id: 'bus-2',
-    operator: 'FlixTransit Luxury',
+    operator: 'Orange Tours & Travels',
     busType: 'Volvo Multi-Axle AC',
-    from: 'New York',
-    to: 'Boston',
-    departureTime: '08:30 AM',
-    arrivalTime: '12:45 PM',
-    duration: '4h 15m',
-    price: 52,
-    originalPrice: 65,
+    from: 'Bengaluru',
+    to: 'Goa',
+    departureTime: '08:00 PM',
+    arrivalTime: '08:00 AM',
+    duration: '12h 00m',
+    price: 1200,
+    originalPrice: 1500,
     rating: 4.8,
-    totalReviews: 512,
+    totalReviews: 612,
     availableSeats: 8,
     totalSeats: 32,
     amenities: ['WiFi', 'Charging Port', 'Snacks', 'Water Bottle', 'Entertainment', 'Live Tracking'],
     boardingPoints: [
-      { id: 'bp-3', time: '08:15 AM', location: 'Port Authority Bus Terminal' },
-      { id: 'bp-4', time: '08:30 AM', location: 'Midtown 34th St' }
+      { id: 'bp-3', time: '07:45 PM', location: 'Anand Rao Circle' },
+      { id: 'bp-4', time: '08:15 PM', location: 'Yeshwantpur Railway Station' }
     ],
     droppingPoints: [
-      { id: 'dp-3', time: '12:30 PM', location: 'South Station Bus Terminal' },
-      { id: 'dp-4', time: '12:45 PM', location: 'Back Bay Station' }
+      { id: 'dp-3', time: '07:30 AM', location: 'Panaji KTC Bus Stand' },
+      { id: 'dp-4', time: '08:00 AM', location: 'Mapusa Bus Stand' }
     ],
     deckType: 'double',
-    layout: generateLayout('double', 52)
+    layout: generateLayout('double', 1200)
   },
   {
     id: 'bus-3',
-    operator: 'MetroLiner Seater',
-    busType: 'Non-AC Seater',
-    from: 'New York',
-    to: 'Boston',
-    departureTime: '11:00 AM',
-    arrivalTime: '03:40 PM',
-    duration: '4h 40m',
-    price: 28,
-    originalPrice: 35,
-    rating: 4.2,
-    totalReviews: 145,
-    availableSeats: 22,
+    operator: 'KSRTC Airavat',
+    busType: 'Volvo Multi-Axle AC',
+    from: 'Bengaluru',
+    to: 'Hyderabad',
+    departureTime: '09:30 PM',
+    arrivalTime: '06:30 AM',
+    duration: '9h 00m',
+    price: 950,
+    originalPrice: 1100,
+    rating: 4.6,
+    totalReviews: 380,
+    availableSeats: 15,
     totalSeats: 32,
-    amenities: ['Water Bottle', 'Charging Port'],
+    amenities: ['Water Bottle', 'Charging Port', 'Blanket', 'Live Tracking'],
     boardingPoints: [
-      { id: 'bp-5', time: '10:45 AM', location: 'Port Authority Bus Terminal' }
+      { id: 'bp-5', time: '09:15 PM', location: 'Kempegowda Bus Station (Majestic)' }
     ],
     droppingPoints: [
-      { id: 'dp-5', time: '03:40 PM', location: 'South Station Bus Terminal' }
+      { id: 'dp-5', time: '06:30 AM', location: 'MGBS Hyderabad' }
     ],
-    deckType: 'single',
-    layout: generateLayout('single', 28)
+    deckType: 'double',
+    layout: generateLayout('double', 950)
   },
   {
     id: 'bus-4',
-    operator: 'StarExpress Sleeper',
+    operator: 'Neeta Travels',
     busType: 'AC Sleeper (2+1)',
-    from: 'New York',
-    to: 'Washington DC',
-    departureTime: '07:00 AM',
-    arrivalTime: '11:30 AM',
-    duration: '4h 30m',
-    price: 65,
-    originalPrice: 75,
-    rating: 4.7,
-    totalReviews: 410,
-    availableSeats: 11,
+    from: 'Mumbai',
+    to: 'Goa',
+    departureTime: '06:00 PM',
+    arrivalTime: '07:00 AM',
+    duration: '13h 00m',
+    price: 1600,
+    originalPrice: 1900,
+    rating: 4.5,
+    totalReviews: 290,
+    availableSeats: 10,
     totalSeats: 32,
     amenities: ['WiFi', 'Charging Port', 'Blanket', 'Pillow', 'Water Bottle', 'Live Tracking'],
     boardingPoints: [
-      { id: 'bp-6', time: '06:45 AM', location: 'Penn Station Bus Stop' },
-      { id: 'bp-7', time: '07:00 AM', location: 'Port Authority Terminal' }
+      { id: 'bp-6', time: '05:45 PM', location: 'Mumbai Central' },
+      { id: 'bp-7', time: '06:15 PM', location: 'Vashi Highway' }
     ],
     droppingPoints: [
-      { id: 'dp-6', time: '11:15 AM', location: 'Union Station Bus Deck' },
-      { id: 'dp-7', time: '11:30 AM', location: 'L\'Enfant Plaza' }
+      { id: 'dp-6', time: '06:45 AM', location: 'Mapusa' },
+      { id: 'dp-7', time: '07:00 AM', location: 'Panaji Bus Stand' }
     ],
     deckType: 'double',
-    layout: generateLayout('double', 65)
+    layout: generateLayout('double', 1600)
   },
   {
     id: 'bus-5',
-    operator: 'Capital Cruiser',
+    operator: 'SRS Travels',
     busType: 'Luxury Scania AC',
-    from: 'New York',
-    to: 'Washington DC',
-    departureTime: '01:30 PM',
-    arrivalTime: '05:45 PM',
-    duration: '4h 15m',
-    price: 70,
-    originalPrice: 85,
-    rating: 4.9,
-    totalReviews: 620,
-    availableSeats: 5,
+    from: 'Bengaluru',
+    to: 'Chennai',
+    departureTime: '10:00 PM',
+    arrivalTime: '04:30 AM',
+    duration: '6h 30m',
+    price: 850,
+    originalPrice: 1000,
+    rating: 4.7,
+    totalReviews: 540,
+    availableSeats: 18,
     totalSeats: 32,
-    amenities: ['WiFi', 'Charging Port', 'Snacks', 'Beverages', 'Blanket', 'Live Tracking', 'Entertainment'],
+    amenities: ['WiFi', 'Charging Port', 'Snacks', 'Beverages', 'Live Tracking'],
     boardingPoints: [
-      { id: 'bp-8', time: '01:15 PM', location: 'Port Authority Terminal' }
+      { id: 'bp-8', time: '09:45 PM', location: 'Madiwala Checkpost' }
     ],
     droppingPoints: [
-      { id: 'dp-8', time: '05:45 PM', location: 'Union Station Bus Deck' }
+      { id: 'dp-8', time: '04:30 AM', location: 'Koyambedu CMBT' }
     ],
     deckType: 'double',
-    layout: generateLayout('double', 70)
+    layout: generateLayout('double', 850)
   },
   {
     id: 'bus-6',
-    operator: 'Pacific Coast Liner',
-    busType: 'AC Semi-Sleeper',
-    from: 'Los Angeles',
-    to: 'San Francisco',
+    operator: 'Jabbar Travels',
+    busType: 'AC Sleeper (2+1)',
+    from: 'Delhi',
+    to: 'Jaipur',
     departureTime: '09:00 PM',
-    arrivalTime: '05:30 AM',
-    duration: '8h 30m',
-    price: 80,
-    originalPrice: 95,
-    rating: 4.5,
-    totalReviews: 289,
-    availableSeats: 16,
+    arrivalTime: '03:30 AM',
+    duration: '6h 30m',
+    price: 900,
+    originalPrice: 1150,
+    rating: 4.4,
+    totalReviews: 210,
+    availableSeats: 14,
     totalSeats: 32,
     amenities: ['WiFi', 'Charging Port', 'Blanket', 'Water Bottle', 'Live Tracking'],
     boardingPoints: [
-      { id: 'bp-9', time: '08:45 PM', location: 'LA Downtown Bus Station, Bay 3' }
+      { id: 'bp-9', time: '08:45 PM', location: 'Dhaula Kuan Metro Station' }
     ],
     droppingPoints: [
-      { id: 'dp-9', time: '05:30 AM', location: 'San Francisco Transbay Terminal' }
+      { id: 'dp-9', time: '03:30 AM', location: 'Sindhi Camp Bus Stand' }
     ],
     deckType: 'double',
-    layout: generateLayout('double', 80)
+    layout: generateLayout('double', 900)
   },
   {
     id: 'bus-7',
-    operator: 'Sunshine Express',
+    operator: 'Kallada Travels',
     busType: 'Volvo Multi-Axle AC',
-    from: 'Miami',
-    to: 'Orlando',
-    departureTime: '07:30 AM',
-    arrivalTime: '11:45 AM',
-    duration: '4h 15m',
-    price: 40,
-    originalPrice: 50,
-    rating: 4.6,
-    totalReviews: 198,
-    availableSeats: 12,
+    from: 'Bengaluru',
+    to: 'Kochi',
+    departureTime: '08:30 PM',
+    arrivalTime: '05:30 AM',
+    duration: '9h 00m',
+    price: 1150,
+    originalPrice: 1350,
+    rating: 4.8,
+    totalReviews: 780,
+    availableSeats: 6,
     totalSeats: 32,
-    amenities: ['WiFi', 'Charging Port', 'Water Bottle', 'Snacks'],
+    amenities: ['WiFi', 'Charging Port', 'Water Bottle', 'Snacks', 'Live Tracking'],
     boardingPoints: [
-      { id: 'bp-10', time: '07:15 AM', location: 'Miami Intermodal Center' }
+      { id: 'bp-10', time: '08:15 PM', location: 'Silk Board Junction' }
     ],
     droppingPoints: [
-      { id: 'dp-10', time: '11:45 AM', location: 'Orlando Greyhound Station' }
+      { id: 'dp-10', time: '05:30 AM', location: 'Vytilla Hub, Kochi' }
     ],
     deckType: 'double',
-    layout: generateLayout('double', 40)
+    layout: generateLayout('double', 1150)
   }
 ];
 
@@ -259,7 +242,7 @@ export const FAQS = [
   },
   {
     question: 'What documents do I need to carry while boarding?',
-    answer: 'Passengers must carry a valid government-issued photo ID (Passport, Driver\'s License, or State ID) along with a digital or printed copy of the booking confirmation / ticket.'
+    answer: 'Passengers must carry a valid government-issued photo ID (Aadhaar Card, PAN Card, Driver\'s License, or Passport) along with a digital or printed copy of the booking confirmation / ticket.'
   },
   {
     question: 'Can I modify my travel date after booking?',

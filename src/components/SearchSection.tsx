@@ -33,10 +33,10 @@ export const SearchSection: React.FC<SearchSectionProps> = ({ filters, setFilter
   };
 
   const popularRoutes = [
-    { from: 'New York', to: 'Boston' },
-    { from: 'New York', to: 'Washington DC' },
-    { from: 'Los Angeles', to: 'San Francisco' },
-    { from: 'Miami', to: 'Orlando' }
+    { from: 'Bengaluru', to: 'Mumbai' },
+    { from: 'Bengaluru', to: 'Goa' },
+    { from: 'Bengaluru', to: 'Hyderabad' },
+    { from: 'Mumbai', to: 'Goa' }
   ];
 
   return (

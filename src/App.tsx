@@ -8,6 +8,7 @@ import { BookingSuccess } from './components/BookingSuccess';
 import { MyBookings } from './components/MyBookings';
 import { LiveTrackerModal } from './components/LiveTrackerModal';
 import { HelpModal } from './components/HelpModal';
+import { LoginModal } from './components/LoginModal';
 import { MOCK_BUSES } from './data/mockBuses';
 import { Bus, SearchFilters, SeatConfig, Booking, Passenger } from './types';
 
@@ -15,13 +16,20 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<'search' | 'bookings' | 'help'>('search');
   const [step, setStep] = useState<'search' | 'list' | 'seat_select' | 'passenger_form' | 'success'>('search');
   
+  const [user, setUser] = useState<{ email: string; name: string } | null>(() => {
+    const saved = localStorage.getItem('busgo_user');
+    return saved ? JSON.parse(saved) : { email: 'demo.user@busgo.com', name: 'Alex Morgan' };
+  });
+
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
   const [filters, setFilters] = useState<SearchFilters>({
-    from: 'New York',
-    to: 'Boston',
+    from: 'Bengaluru',
+    to: 'Mumbai',
     date: new Date().toISOString().split('T')[0],
     busType: 'all',
     minPrice: 0,
-    maxPrice: 200,
+    maxPrice: 3000,
     departureTimeSlot: 'all',
     sortBy: 'departure'
   });
@@ -40,7 +48,6 @@ export default function App() {
         return [];
       }
     }
-    // Initial sample booking for testing
     return [
       {
         id: 'bk-101',
@@ -67,6 +74,14 @@ export default function App() {
     localStorage.setItem('busgo_bookings', JSON.stringify(bookings));
   }, [bookings]);
 
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('busgo_user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('busgo_user');
+    }
+  }, [user]);
+
   const handleSearch = () => {
     setStep('list');
   };
@@ -83,7 +98,7 @@ export default function App() {
     setStep('passenger_form');
   };
 
-  const handleConfirmBooking = (data: {
+  const handleConfirmBooking = async (data: {
     passengers: Passenger[];
     contactEmail: string;
     contactPhone: string;
@@ -108,6 +123,17 @@ export default function App() {
       status: 'Confirmed'
     };
 
+    // Try sending booking to Express backend (Supabase connected)
+    try {
+      await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newBooking)
+      });
+    } catch (err) {
+      console.log('Backend sync offline, stored locally.');
+    }
+
     setBookings([newBooking, ...bookings]);
     setLatestBooking(newBooking);
     setStep('success');
@@ -128,6 +154,9 @@ export default function App() {
           if (tab === 'search') setStep('search');
         }}
         myBookingsCount={bookings.filter(b => b.status === 'Confirmed').length}
+        user={user}
+        onOpenLogin={() => setIsLoginModalOpen(true)}
+        onLogout={() => setUser(null)}
       />
 
       {/* Main Content Router */}
@@ -218,12 +247,23 @@ export default function App() {
         />
       )}
 
+      {/* Login Modal */}
+      {isLoginModalOpen && (
+        <LoginModal
+          onClose={() => setIsLoginModalOpen(false)}
+          onLoginSuccess={(userData) => {
+            setUser(userData);
+            setIsLoginModalOpen(false);
+          }}
+        />
+      )}
+
       {/* Footer */}
       <footer className="bg-slate-900 text-slate-400 py-8 px-4 sm:px-6 lg:px-8 mt-12 border-t border-slate-800 text-xs">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <span className="font-bold text-white text-sm">Bus<span className="text-blue-500">Go</span></span>
-            <span>© 2026 BusGo Technologies Inc. All rights reserved.</span>
+            <span>© 2026 BusGo Technologies Inc. Powered by Supabase & Express Backend.</span>
           </div>
           <div className="flex items-center gap-6">
             <button onClick={() => setActiveTab('help')} className="hover:text-white transition-colors">Privacy Policy</button>

@@ -1,13 +1,23 @@
 import React from 'react';
-import { Bus as BusIcon, Ticket, HelpCircle, User, ShieldCheck } from 'lucide-react';
+import { Bus as BusIcon, Ticket, HelpCircle, User, ShieldCheck, LogOut, LogIn } from 'lucide-react';
 
 interface NavbarProps {
   activeTab: 'search' | 'bookings' | 'help';
   setActiveTab: (tab: 'search' | 'bookings' | 'help') => void;
   myBookingsCount: number;
+  user: { email: string; name: string } | null;
+  onOpenLogin: () => void;
+  onLogout: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, myBookingsCount }) => {
+export const Navbar: React.FC<NavbarProps> = ({
+  activeTab,
+  setActiveTab,
+  myBookingsCount,
+  user,
+  onOpenLogin,
+  onLogout
+}) => {
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -22,7 +32,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, myBooki
             </div>
             <div>
               <span className="text-xl font-bold tracking-tight text-slate-900">Bus<span className="text-blue-600">Go</span></span>
-              <span className="block text-[10px] font-medium text-slate-500 uppercase tracking-widest">Safe & Express Travel</span>
+              <span className="block text-[10px] font-medium text-slate-500 uppercase tracking-widest">Supabase + Express Backend</span>
             </div>
           </div>
 
@@ -68,15 +78,34 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, myBooki
             </button>
           </nav>
 
-          {/* User profile / trust badge */}
+          {/* User profile / Login button */}
           <div className="flex items-center gap-3">
-            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-full text-xs font-medium border border-emerald-200">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              Verified Operators
-            </div>
-            <div className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-700 border border-slate-200 font-semibold text-sm">
-              <User className="w-4 h-4" />
-            </div>
+            {user ? (
+              <div className="flex items-center gap-3">
+                <div className="hidden sm:flex flex-col text-right">
+                  <span className="text-xs font-bold text-slate-900">{user.name}</span>
+                  <span className="text-[10px] text-slate-500">{user.email}</span>
+                </div>
+                <div className="w-9 h-9 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-sm border border-blue-200">
+                  {user.name.charAt(0).toUpperCase()}
+                </div>
+                <button
+                  onClick={onLogout}
+                  title="Sign Out"
+                  className="p-2 rounded-xl text-slate-500 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+                >
+                  <LogOut className="w-4 h-4" />
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={onOpenLogin}
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl text-xs shadow-md shadow-blue-600/30 transition-all"
+              >
+                <LogIn className="w-4 h-4" />
+                Sign In
+              </button>
+            )}
           </div>
         </div>
 

@@ -224,7 +224,7 @@ export const SeatSelector: React.FC<SeatSelectorProps> = ({ bus, journeyDate, on
               </div>
               <div className="flex items-center justify-between text-sm font-bold text-slate-900 pt-2 border-t border-slate-200">
                 <span>Total Amount:</span>
-                <span className="text-xl text-blue-600">${totalPrice}</span>
+                <span className="text-xl text-blue-600">₹{totalPrice}</span>
               </div>
 
               <button
